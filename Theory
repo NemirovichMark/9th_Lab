@@ -1,0 +1,12 @@
+You can use
+
+FileStream class
+https://learn.microsoft.com/ru-ru/dotnet/api/System.IO.FileStream?view=netcore-3.1
+or 
+StreamReader & StreamWriter
+or (not recomended)
+File class
+https://learn.microsoft.com/ru-ru/dotnet/api/system.io.file?view=net-6.0
+
+Look more information here:
+https://learn.microsoft.com/ru-ru/dotnet/standard/io/
