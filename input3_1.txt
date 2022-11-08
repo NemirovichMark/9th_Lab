@@ -1,0 +1,16 @@
+2
+3
+Pashi
+2
+Pasha1
+1 1 1
+Pasha2
+2 2 2
+Pavli
+3
+Pavel1
+3 3 3
+Pavel2
+4 4 4
+Pavel3
+5 5 5
