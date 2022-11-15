@@ -1,0 +1,139 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
+using System.Security;
+using System.Security.Cryptography;
+using System.Transactions;
+
+class Programm
+{
+    static void sortt(Student[] st)
+    {
+        int left = 0;
+        int right = st.Length - 1;
+
+        while (left < right)
+        {
+            for (int i = left; i < right; i++)
+            {
+                if (st[i].sr < st[i + 1].sr)
+                {
+                    Student x = st[i];
+                    st[i] = st[i + 1];
+                    st[i + 1] = x;
+                }
+
+            }
+            right--;
+
+            for (int i = right; i > left; i--)
+            {
+                if (st[i - 1].sr < st[i].sr)
+                {
+                    Student x = st[i];
+                    st[i] = st[i - 1];
+                    st[i - 1] = x;
+                }
+            }
+            left++;
+        }
+    }
+    class Student
+    {
+        public string name;
+        public double[] x;
+        public double sr;
+    }
+
+    class stud : Student
+    {
+        public double step;
+        public stud(string name, double[] x)
+        {
+            this.sr = 0;
+            this.name = name;
+            this.x = x;
+            for (int i = 0; i < 4; i++)
+            {
+                sr += x[i];
+            }
+            sr = sr / 4;
+        }
+        public double stt()
+        {
+
+            return sr * 1000;
+            
+        }
+    }
+
+    static void Main()
+    {
+        string parh = "C:\\Users\\gsent\\OneDrive\\Рабочий стол\\Stud.txt";
+        StreamReader sr = new StreamReader(parh);
+        string line;
+        line = sr.ReadLine();
+        int r = int.Parse(line);
+        Console.WriteLine(r);
+  
+        stud[] st = new stud[r];
+
+        for (int i = 0; i < st.Length; i++)
+        {
+            string name;
+
+            name = new string(sr.ReadLine());
+
+            double[] marks = new double[4];
+            string[] mark;
+
+            while (true)
+            {
+                mark = sr.ReadLine().Split(" ");
+                if (mark.Length != 4)
+                {
+                    continue;
+                }
+                break;
+            }
+
+            for (int j = 0; j < 4; j++)
+            {
+                double x;
+                double.TryParse(mark[j], out x);
+
+                if (double.TryParse(mark[j], out x) == false)
+                {
+                    return;
+                }
+
+                marks[j] = x;
+            }
+
+            st[i] = new stud(name, marks);
+
+        }
+
+        sr.Close();
+        sortt(st);
+
+        string parh1 = "C:\\Users\\gsent\\OneDrive\\Рабочий стол\\Stud_viv.txt";
+        StreamWriter ss = new StreamWriter(parh1);
+
+        for (int i = 0; i < st.Length; i++)
+        {
+            if (st[i].sr >= 4)
+            {
+                double d;
+                d = st[i].stt();
+                ss.WriteLine("Фамилия: " + st[i].name + " Степендия: " + d + "$");
+            }
+        }
+        ss.WriteLine();
+        ss.Close();
+    }
+}

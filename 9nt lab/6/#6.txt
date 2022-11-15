@@ -1,0 +1,145 @@
+using System;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
+using System.Security;
+using System.Security.Cryptography;
+using System.Transactions;
+
+class Programm
+{
+    static void sortt(AA[] st)
+    {
+        int left = 0;
+        int right = st.Length - 1;
+
+        while (left < right)
+        {
+            for (int i = left; i < right; i++)
+            {
+                if (st[i].sum < st[i + 1].sum)
+                {
+                    AA x = st[i];
+                    st[i] = st[i + 1];
+                    st[i + 1] = x;
+                }
+
+            }
+            right--;
+
+            for (int i = right; i > left; i--)
+            {
+                if (st[i - 1].sum < st[i].sum)
+                {
+                    AA x = st[i];
+                    st[i] = st[i - 1];
+                    st[i - 1] = x;
+                }
+            }
+            left++;
+        }
+    }
+    class AA
+    {
+        public string name;
+        public double[] x;
+        public double sum;
+    }
+
+    class bb : AA
+    {
+        public bb(string name, double[] x)
+        {
+            this.sum = 0;
+            this.name = name;
+            this.x = x;
+            for (int i = 0; i < x.Length; i++)
+            {
+                sum += x[i];
+            }
+        }
+        public string bb1()
+        {
+            string rez;
+            if (sum >= 30)
+            {
+                rez = "Вы повысили разряд";
+                return rez;
+            }
+
+            else
+            {
+                rez = "Разряд не изменился";
+                return rez;
+            }
+        }
+    }
+
+    static void Main()
+    {
+        string parth = "C:\\Users\\gsent\\OneDrive\\Рабочий стол\\sport.txt";
+        StreamReader sr = new StreamReader(parth);
+        string line;
+        line = sr.ReadLine();
+        int xx = int.Parse(line);
+
+        bb[] st = new bb[xx];
+
+        for (int i = 0; i < st.Length; i++)
+        {
+            string name;
+            while (true)
+            {
+                name = sr.ReadLine();
+                if (name.Length == 0)
+                {
+                    continue;
+                }
+                break;
+            }
+
+            double[] points = new double[10];
+            string[] point;
+            while (true)
+            {
+                point = sr.ReadLine().Split(" ");
+                if (point.Length != 10)
+                {
+                    continue;
+                }
+                break;
+            }
+
+            for (int j = 0; j < 10; j++)
+            {
+                double x;
+                double.TryParse(point[j], out x);
+
+                if (double.TryParse(point[j], out x) == false)
+                {
+                    return;
+                }
+
+                points[j] = x;
+            }
+
+            st[i] = new bb(name, points);
+        }
+
+        sr.Close();
+        sortt(st);
+
+        string parth1 = "C:\\Users\\gsent\\OneDrive\\Рабочий стол\\sportik.txt";
+        StreamWriter ss = new StreamWriter(parth1);
+
+        for (int i = 0; i < st.Length; i++)
+        {
+            ss.WriteLine(st[i].name + "   " + st[i].sum + " " + st[i].bb1());
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+        ss.Close();
+    }
+}
